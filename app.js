@@ -71,7 +71,7 @@ app.delete("/listings/:id",async(req,res)=>{
     res.redirect('/listings')
 })
 
-app.get('/',(req,res)=>{
+app.get('/signup',(req,res)=>{
     res.send('hello from root route')
 })
 

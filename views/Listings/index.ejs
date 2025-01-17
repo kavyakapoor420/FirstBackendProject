@@ -1,19 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
-    <h3>All Listings</h3>
-    <form method="GET" action="/listings/new">
-      <button>Create New Listing</button>
-    </form>
-    <ul>
+<%layout('/Layouts/Boilerplate.ejs')%>
+
+<div class="">
+<div class="max-w-7xl mx-auto p-6">
+    <!-- Header and Button -->
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-bold text-gray-800">All Listings</h3>
+      <form method="GET" action="/listings/new">
+        <button
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Create New Listing
+        </button>
+      </form>
+    </div>
+  
+    <!-- Listings Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <% for(let listing of allListings) { %>
-      <li><a href="/listings/<%= listing._id %>"> <%= listing.title %> </a></li>
+      <!-- Card -->
+      <div class="bg-slate-300 shadow-lg rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow">
+        <!-- Image (60%) -->
+        <a
+          href="/listings/<%= listing._id %>"
+          class="block relative group"
+        >
+          <img
+            src="<%= listing.image.url %>"
+            alt="<%= listing.title %>"
+            class="w-full h-40 sm:h-48 object-cover group-hover:opacity-75"
+          />
+        </a>
+  
+        <!-- Details Section -->
+        <div class="flex-grow p-4 flex flex-col">
+          <!-- Title (15%) -->
+          <h4 class="text-lg font-bold text-gray-800 flex-grow">
+            <%= listing.title %>
+          </h4>
+          
+          <!-- Price (10%) -->
+          <p class="text-md text-blue-600 font-semibold mt-2">
+            $<%= listing.price %>
+          </p>
+  
+          <!-- Description (15%) -->
+          <p class="text-sm text-gray-600 mt-3 line-clamp-3">
+            <%= listing.description || "No description available" %>
+          </p>
+        </div>
+      </div>
       <% } %>
-    </ul>
-  </body>
-</html>
+    </div>
+  </div>
+</div>
