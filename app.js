@@ -3,16 +3,20 @@ const app=express()
 const mongoose=require('mongoose')
 const path=require('path')
 const methodOverride=require('method-override')
+const ejsMate=require('ejs-mate')
+
 const ListingModel = require('./models/ListingModels')
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'))
 
 
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(methodOverride('_method'))
+
+app.engine('ejs',ejsMate)
 
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 
@@ -71,7 +75,7 @@ app.get('/',(req,res)=>{
     res.send('hello from root route')
 })
 
-app.listen(3000,()=>{
+app.listen(3001,()=>{
     console.log('server is listening on port 3000')
 })
 
