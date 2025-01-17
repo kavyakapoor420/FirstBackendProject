@@ -1,24 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
-  <body>
-    <h3>Listing Details :</h3>
-    <ul>
-      <li><%= listing.title %></li>
-      <li><%= listing.description %></li>
-      <li>&#8377; <%=listing.price%></li>
-      <li><%= listing.location %></li>
-      <li><%= listing.country %></li>
-    </ul>
-    <br />
-    <a href="/listings/<%= listing._id %>/edit">Edit this Listing</a>
-    <br /><br />
-    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-      <button>Delete this listing</button>
-    </form>
-  </body>
-</html>
+<%layout('/Layouts/Boilerplate.ejs')%>
+
+
+<section class="">
+    <div>
+        <div>
+            <!-- display image of the listing  -->
+            <img src="<%=listing.image.url%>"
+             class="h-64 w-full rounded object-cover lg:h-96 lg:w-1/2" 
+             alt="listingImage"
+             />
+             <!-- title of the listing  -->
+              <h1 class="my-4 text-3xl font-semibold text-black">
+                <%=listing.title%>
+              </h1>
+              <!-- description of the listing  -->
+              <p class="leading-relaxed"><%=listing.description%></p>
+              
+              <div class="mb-5 mt-6 flex items-center border-b-2 border-gray-200 pb-5 ">
+                  <div class="flex items-center">
+                     <span class="mr-1 text-sm font-semibold">
+                        <%=listing.location%>,
+                     </span>
+                     <span class="mr-3 texts-sm font-semibold">
+                        <%=listing.country%>
+                     </span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                       <span>
+                        &#8377;<%=listing.price.toLocaleString("en-IN")%>
+                       </span>
+                    
+                  </div>
+              </div>
+
+              <div class="flex m-4">
+                <!-- to edit this listing  -->
+                 <a href="/listings/<%=listing._id%>/edit" class="h-12 w-32 rounded-md bg-violet-400 px-5 py-2 text-sm font-semibold shadow-sm  text-black hover:opacity-85 focus-visible:outline focus-visible:outline-2  focus-visible:outline-offset-2 focus-visible:outline-black mr-3">
+                  Edit Listing
+                 </a>
+                <!-- button to delete this listing  -->
+                 <form method="POST" action="/listings/<%listing._id%>?_method=DELETE">
+                      <button class="rounded-md bg-red-500 px-5 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ">
+                          Delete
+                      </button>
+                  </form>
+              </div>
+
+        </div>
+    </div>
+</section>
