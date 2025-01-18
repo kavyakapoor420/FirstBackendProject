@@ -1,0 +1,48 @@
+<%layout('/Layouts/Boilerplate.ejs')%>
+
+
+<div class="max-w-7xl mx-auto p-6 ">
+    <!-- Listing Details -->
+    <div class=" bg-slate-300 shadow-lg rounded-lg overflow-hidden">
+      <!-- Listing Image -->
+      <img
+        src="<%= listing.image.url %>"
+        alt="<%= listing.title %>"
+        class="w-full h-60 object-cover"
+      />
+  
+      <!-- Listing Content -->
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+          <%= listing.title %>
+        </h2>
+        <p class="text-md text-gray-600 mb-4">
+          <%= listing.description || "No description available" %>
+        </p>
+        <p class="text-lg text-blue-600 font-semibold mb-6">
+          $<%= listing.price %>
+        </p>
+  
+        <!-- Buttons -->
+        <div class="flex space-x-4">
+          <a
+            href="/listings/<%= listing._id %>/edit"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+          >
+            Edit
+          </a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+            <button
+              type="submit"
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  

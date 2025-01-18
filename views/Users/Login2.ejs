@@ -1,0 +1,43 @@
+<%layout("/Layouts/Boilerplate.ejs")%>
+
+<section class="bg-slate-500">
+    <div class="grid grid-cols-1 lg:grid-cols-2">
+        <div class="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+           <div class="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+              <h1 class="sm:text-4xl text-black leading-light font-bold text-3xl ">
+                Login Page
+              </h1>
+              <p class="mt-2 text-sm text-red-400">
+                Don&#x27;t have an account?
+                <a href="/user/register" title="register" class="font-semibold text-violet-700 transition-all duration-200 hover:underline ">
+                    Create a Free account
+                </a>
+              </p>
+              <form method="POST" action="/user/login" class="mt-8">
+                   <div class="space-y-5">
+                    <!-- input for email  -->
+                    <div>
+                        <label for="email"  class="text-base font-medium text-gray-900">
+                            Email
+                        </label>
+                        <input name="email" id="email" placeholder="enter your email" required class="flex h-12 w-full rounded-md border border-black  px-3 py-2 text-xl placeholder:text-violet-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50  "/>
+                    </div>
+                    <!-- input for password  -->
+                    <div>
+                        <label for="password" class="text-base font-medium text-gray-900">
+                            password
+                        </label>
+                        <input name="password" id="password" placeholder="enter your password" required class="flex h-12 w-full rounded-md border border-black  px-3 py-2 text-xl placeholder:text-violet-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50  "/>
+                    </div>
+                     <div>
+                        <button type="submit" class="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-violet-400/80">
+                          Login 
+                        </button>
+                     </div>
+                   </div>
+
+              </form>
+           </div>
+        </div>
+    </div>
+</section>

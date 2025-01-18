@@ -5,7 +5,9 @@ const path=require('path')
 const methodOverride=require('method-override')
 const ejsMate=require('ejs-mate')
 
-const ListingModel = require('./models/ListingModels')
+
+const ListingModel = require('./models/ListingModels.js')
+const UserRouter = require('./Routes/UserRouter.js')
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'))
@@ -71,7 +73,10 @@ app.delete("/listings/:id",async(req,res)=>{
     res.redirect('/listings')
 })
 
-app.get('/signup',(req,res)=>{
+app.use('/user',UserRouter)
+
+
+app.get('/',(req,res)=>{
     res.send('hello from root route')
 })
 
