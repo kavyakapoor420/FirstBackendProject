@@ -1,4 +1,5 @@
 const mongoose=require("mongoose")
+const ReviewModel = require("../Models/ReviewModel.js")
 
 
 const listingSchema=new mongoose.Schema({
@@ -37,6 +38,12 @@ const listingSchema=new mongoose.Schema({
   location:String,
   country:String,
 
+})
+
+
+//delete all the reviews which have the id of deleted listings
+listingSchema.post('findOneAndDelete',async(listing)=>{
+    await ReviewModel.deleteMany({_id:{$in:listing.rating}})
 })
 
 const ListingModel=mongoose.model("ListingModel",listingSchema)
