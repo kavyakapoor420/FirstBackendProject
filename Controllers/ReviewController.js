@@ -11,20 +11,21 @@ const createNewReview=wrapAsync(async(req,res)=>{
     if(!listing){
         throw new ExpressErrorClass(404,'listings does not exists')
     }
-    const {rating,comment}=req.body ;
+    let {rating,comment}=req.body ;
     const userId=id;
-    const author=req.user.id ;
-
-    const newRating=new ReviewModel({
+    const author=req.user.id 
+    const newReview=new ReviewModel({
         rating,comment,userId,author
     })
-    
-    listing.rating.push(newRating)
+   
 
-    await newRating.save() 
-    await listing.save()
+    listing.rating.push(newReview)
 
-    res.redirect(`/listings/${id}`)
+    await newReview.save() 
+    await listing.save() 
+
+   req.flash('success','review added for this listing in database')
+   res.redirect(`/listings/${listing._id}`)
 })
 
 // delete review and delete that review from database and from that corresponding listing als
@@ -44,6 +45,7 @@ const deleteReview=wrapAsync(async(req,res)=>{
    if(!deletedReview){
       throw new ExpressErrorClass(404,'review not found')
    }
+   req.flash('success','review deleted')
    res.redirect(`/listings/${id}`)
 })
 

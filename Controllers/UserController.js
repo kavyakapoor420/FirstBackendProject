@@ -20,37 +20,46 @@ const registerUser=wrapAsync(async(req,res)=>{
       throw new  ExpressErrorClass(404,'user already exist with this email')
     }
 
-    const newUser=new UserModel({
-        email,username
+    const newUser=await  UserModel.create({
+        email,username,password
     })
-     await UserModel.register(newUser,password)
+    
 
     //after user signups for the first time directly logged him 
        // Automatically log the user in after signup
-    req.login(newUser,(err)=>{
-       if(err){
-        return res.status(500).json({ message: 'Error logging in after signup', error: err });
-       }
-       return res.status(200).json({ message: 'Signup successful', user });
-    })
+   req.login(newUser,(err)=>{
+    if(err){
+        return next(err)
+    }
+    req.flash('success',`welcome ${username} on NestQuest`)
+    res.redirect('/listings')
+   })
 })
 
 const loginUser = (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate("local", (err, user, info) => {
       if (err) {
-        return res.status(500).json({ message: 'Login failed', error: err });
-      }
+        return next(err);
+      } // Handle any errors
+  
       if (!user) {
-        return res.status(401).json({ message: 'Invalid email or password' });
+        req.flash("error", info.message || "Login failed.");
+        return res.redirect("/user/login");
       }
-      req.login(user, (err) => {
+  
+      req.logIn(user, (err) => {
         if (err) {
-          return res.status(500).json({ message: 'Error logging in', error: err });
+          return next(err);
         }
-        return res.status(200).json({ message: 'Login successful', user });
+  
+        req.flash(
+          "success",
+          `Welcome Back ${user.userName}, NestQuest feels better with you!`
+        );
+        res.redirect(res.locals.redirectUrl || "/listings");
       });
-    })(req, res, next);
-};
+    })(req, res, next); // Call the passport middleware
+  };
 
 const logoutUser=wrapAsync(async(req,res)=>{
     req.logout((err)=>{

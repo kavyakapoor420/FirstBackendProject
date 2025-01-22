@@ -3,7 +3,7 @@ const ReviewModel = require("../Models/ReviewModel.js")
 
 
 const listingSchema=new mongoose.Schema({
-    title:{type:String},
+    title:{type:String,required:true},
     description:String,
     image:{
         filename:{
@@ -43,7 +43,9 @@ const listingSchema=new mongoose.Schema({
 
 //delete all the reviews which have the id of deleted listings
 listingSchema.post('findOneAndDelete',async(listing)=>{
+   if(listing){
     await ReviewModel.deleteMany({_id:{$in:listing.rating}})
+   }
 })
 
 const ListingModel=mongoose.model("ListingModel",listingSchema)

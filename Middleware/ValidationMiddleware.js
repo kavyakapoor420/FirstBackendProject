@@ -26,3 +26,7 @@ const validateReview=(req,res,next)=>{
         next()
     }
 }
+
+module.exports={
+    validateListing,validateReview
+}

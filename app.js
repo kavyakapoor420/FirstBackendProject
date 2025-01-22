@@ -8,12 +8,14 @@ const expressSession=require('express-session')
 const flash=require('connect-flash')
 const cookieParser=require('cookie-parser')
 
-const ListingModel = require('./models/ListingModels.js')
+const passport=require('./PassportConfig/passportLocalStartegy.js')
+
+
 const UserRouter = require('./Routes/UserRouter.js')
 const ReviewRouter = require('./Routes/ReviewRouter.js')
-const ExpressErrorClass = require('./UtilityFunctions/ExpressErrorClass.js')
 const wrapAsync = require('./UtilityFunctions/AsyncHandler.js')
-const passport = require('passport')
+// const passport = require('passport')
+const ListingRouter = require('./Routes/ListingRouter.js')
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'))
@@ -43,6 +45,12 @@ app.use(passport.initialize())
 //enable persistent login sessions
 app.use(passport.session())
 
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
 
 //middleware for flasing success,error message on fronted client side
 app.use((req,res,next)=>{
@@ -66,62 +74,31 @@ main().then(()=>{
     console.log(err)
 })
 
-//index route
-app.get('/listings',async(req,res)=>{
-    const allListings=await ListingModel.find({})
-    res.render('Listings/index.ejs',{allListings})
-})
-// new route -> to create new listing
-app.get('/listings/new',(req,res)=>{
-    res.render('Listings/new.ejs')
-})
-//show route -> to show details of particular listings
-app.get('/listings/:id',async(req,res)=>{
-    const {id}=req.params ;
-    const listing=await ListingModel.findById(id)
-    res.render("Listings/show.ejs",{listing})
-})
-//create route -> to create new listing
-app.post('/listings',async(req,res)=>{
-    const newListing=new ListingModel(req.body.listing)
-    await newListing.save()
-    res.redirect('/listings')
-})
-// edit (GET) route -> this will render a Form that will take details of listingsthe update->POST route 
-app.get('/listings/:id/edit',async(req,res)=>{
-    const {id}=req.params ;
-    const listing=await ListingModel.findById(id)
-    res.render('Listings/edit.ejs',{listing})
-})
-//update route
-app.put('/listings/:id',async(req,res)=>{
-    let {id}=req.params ;
-    await ListingModel.findByIdAndUpdate(id,{...req.body.listing})
-    res.redirect(`/listings/${id}`)
-})
-//destory or delete route -> to delete a particular listing
-app.delete("/listings/:id",async(req,res)=>{
-    const {id}=req.params ;
-    const deletedListing=await ListingModel.findByIdAndDelete(id)
-    // console.log(deletedListing)
-    res.redirect('/listings')
-})
 
+
+app.use('/listings',ListingRouter)
 app.use('/user',UserRouter)
-app.use('/review/:id',ReviewRouter)
+app.use('/listings/:id/review',ReviewRouter)
 
 app.get('/about',(req,res)=>{
     res.render('AboutPage.ejs')
 })
 
 app.get('/',(req,res)=>{
-    res.send('hello from root route')
+    res.redirect('/listings')
 })
-
+// if user will try to search some url that does not exists so 404 not found page will b shown
 app.all("*",wrapAsync((req,res,next)=>{
-     next(new ExpressErrorClass(404,'Page Not found'))
-    res.render('PageNotFound.ejs')
+    {
+        (statusCode = 404), (message = "Page Not Found!");
+      }
+      res.status(statusCode).render("PageNotFound.ejs", { statusCode, message });
 }))
+//error handing middleware
+app.use((err,req,res,next)=>{
+    let {statusCode=500,message='something went wrong'}=err ;
+    res.render('error.ejs',{message,statusCode})
+})
 
 app.listen(3001,()=>{
     console.log('server is listening on port 3000')
