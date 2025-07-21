@@ -1,27 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-      <h3>Create a New listing</h3>
-      <!-- render a form that will take details of listing and button to create new listing -->
-      <form method="POST" action="/listings">
-         <input name="listing[title]" placeholder="enter title for this new Listing"/>
-         <br/>
-         <textarea name="listing[description]" placeholder="enter description"></textarea>
-         <br/>
-         <input name="listing[image]" placeholder="enter image for this new Listing"/>
-         <br/>
-         <input name="listing[price]" placeholder="enter price for this new Listing"/>
-         <br/>
-         <input name="listing[location]" placeholder="enter location for this new Listing"/>
-         <br/>
-         <input name="listing[country]" placeholder="enter country for this new Listing"/>
-         <br/>
-         <button>Create Listing</button>
-      </form>
-</body>
-</html>
+<%layout('/Layouts/Boilerplate.ejs')%>
+
+<div class="w-[75%] h-screen flex flex-col mx-auto bg-slate-300 p-4 rounded-lg">
+  <h1 class="text-3xl mb-6 font-bold">
+    Create A New listing
+  </h1>
+  <!-- render  A form that will take details of lsiting from user  -->
+    <div>
+         <form method="POST" action="/listings" class="space-y-6" enctype="multipart/form-data"  >
+             
+            <!-- input + label for title  -->
+            <div>
+                <label for="title" class="block text-md font-medium text-black">
+                    Title
+                </label>
+                 <input name="listing[title]" class="mt-1 block w-full p-2 rounded-md border-black  border-2 shadow-sm  focus:border-black focus:ring-black" placeholder="give title to this listing" id="title" required> 
+            </div>
+            <!-- input + label for descriptiton -->
+            <div>
+                <label for="description" class="block text-md font-medium text-black">
+                    Description
+                </label>
+                <textarea id="description" required="true" class="mt-1 block w-full p-3 border-2 rounded-md border-gray-600 shadow-sm focus:border-black focus:ring-black" name="listing[description]" placeholder="enter description for this listing"></textarea>
+            </div>
+            <!-- input + label for price  -->
+            <div>
+                <label for="price" class="block text-md font-medium text-black">
+                    Price
+                </label>
+                 <input name="listing[price]" class="mt-1 block w-full p-2 rounded-md border-black  border-2 shadow-sm  focus:border-black focus:ring-black" placeholder="give price of  this listing " id="price" required> 
+            </div>
+            <!-- input for image  -->
+             <div>
+                <label for="image" class="block text-md font-medium text-black ">
+                    Image
+                </label>
+                <input name="listing[image]" id="image" class="mt-1 text-black w-full p-2 border-2 rounded-md border-gray-500 shadow-sm focus:border-black focus:ring-black" placeholder="enter url or link of Image "/>
+             </div>
+             <!-- input for location and country-->
+             <div class="md:flex block">
+                <!-- for location  -->
+                <div class="w-full lg:w-1/2 md:w-[100%] mr-2 mb-3">
+                    <label for="location" class="block  tex-md font-medium text-black">
+                        Location
+                    </label>
+                    <input class=" mt-1 block w-full p-2 border-2 rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black" name="location" placeholder="enter location of this listing"/>                   
+                 </div>
+                 <!-- for counrty  -->
+                  <div class="w-full lg:w-1/2 md:w-[100%]">
+                     <label for="country" class="block text-md font-medium text-black">
+                        Country
+                     </label>
+                     <input id="counrty" name="listing[country]" class="mt-1 block w-full p-2 border-2 rounded-md border-gary shadow-sm focus:border-black focus:ring-black " placeholder="enter country for this listing"/>
+                  </div>
+             </div>
+            <!-- button for creating a new listing  -->
+                <div class="flex justify-start">
+                   <button type="submit" class="rounded-md bg-violet-400 px-5 py-2 text-sm font-semibold tex-black shadow-sm hover:opacity-85 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-black">
+                    Add New lsiting
+                   </button>
+                </div>
+        </form>
+    </div>
+</div>

@@ -1,8 +1,9 @@
 const mongoose=require("mongoose")
+const ReviewModel = require("../Models/ReviewModel.js")
 
 
 const listingSchema=new mongoose.Schema({
-    title:{type:String},
+    title:{type:String,required:true},
     description:String,
     image:{
         filename:{
@@ -13,6 +14,16 @@ const listingSchema=new mongoose.Schema({
             type:String,
             default: "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
         }
+    },
+    rating:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"ReviewModel"
+        }
+    ],
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"UserModel"
     },
     // image: {
   //   type: String,
@@ -26,6 +37,15 @@ const listingSchema=new mongoose.Schema({
   price:Number,
   location:String,
   country:String,
+
+})
+
+
+//delete all the reviews which have the id of deleted listings
+listingSchema.post('findOneAndDelete',async(listing)=>{
+   if(listing){
+    await ReviewModel.deleteMany({_id:{$in:listing.rating}})
+   }
 })
 
 const ListingModel=mongoose.model("ListingModel",listingSchema)

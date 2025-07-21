@@ -1,0 +1,122 @@
+<div class="relative w-full bg-slate-400 z-10 sticky top-0">
+    <div class="flex w-full items-center h-24 justify-between px-4 py-4 sm:px-6 lg:px-8 border-b-2">
+      <!-- Logo Section -->
+      <div class="inline-flex items-center space-x-2">
+        <span>
+          <i class="fa-solid fa-house text-5xl text-violet-500"></i>
+        </span>
+        <a href="/listings" class="font-bold text-3xl text-violet-600">
+            NestQuest
+        </a>
+      </div>
+  
+      <!-- Menu Items -->
+      <div class="hidden lg:flex grow items-start">
+        <ul class="ml-12 inline-flex space-x-8">
+          <li>
+            <a
+              href="/listings"
+              class="inline-flex items-center text-lg font-semibold text-gray-800 hover:text-gray-500"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/listings/new"
+              class="inline-flex items-center text-lg font-semibold text-gray-800 hover:text-gray-500"
+              >Add Listing</a
+            >
+          </li>
+          <li>
+            <a
+              href="/about"
+              class="inline-flex items-center text-lg font-semibold text-gray-800 hover:text-gray-500"
+              >About</a
+            >
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Hamburger Icon for Small Screens -->
+      <div class="lg:hidden">
+        <button
+          id="menu-toggle"
+          aria-label="Toggle navigation menu"
+          class="focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6 cursor-pointer"
+          >
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden">
+      <ul class="flex flex-col space-y-4 p-4">
+        <li>
+          <a
+            href="/listings"
+            class="block text-lg font-semibold text-gray-800 hover:text-gray-900"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            href="/listings/new"
+            class="block text-lg font-semibold text-gray-800 hover:text-gray-900"
+            >Add Listing</a
+          >
+        </li>
+        <li>
+          <a
+            href="/about"
+            class="block text-lg font-semibold text-gray-800 hover:text-gray-900"
+            >About</a
+          >
+        </li>
+        <li>
+          <a
+            href="/user/register"
+            class="w-full text-left rounded-md bg-transparent px-4 py-3 text-md font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          >
+            Sign In
+          </a>
+        </li>
+        <li>
+          <a
+            href="/user/login"
+            class="rounded-md border border-black px-3 py-2 text-md font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          >
+            Log In
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Toggle Menu Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+  
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    });
+  </script>
+  

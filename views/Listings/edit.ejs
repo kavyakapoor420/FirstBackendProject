@@ -1,37 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
-  <body>
-    <h3>Edit your Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-      <input name="listing[title]" value="<%= listing.title %>" type="text" placeholder="enter your title" />
-      <br /><br />
-      <textarea name="listing[description]" placeholder="enter description" >
-<%= listing.description %></textarea
-      >
-      <br /><br />
-      <!-- <input name="listing[image]" value="<%= listing.image %>" type="text" /> -->
-          <input name="listing[image]" type="text" />
-      <br /><br />
-      <input name="listing[price]" value="<%= listing.price %>" type="number" />
-      <br /><br />
-      <input
-        name="listing[country]"
-        value="<%= listing.country %>"
-        type="text"
-      />
-      <br /><br />
-      <input
-        name="listing[location]"
-        value="<%= listing.location %>"
-        type="text"
-      />
-      <br /><br />
-      <button>Edit</button>
-    </form>
-  </body>
-</html>
+<%layout("/Layouts/Boilerplate.ejs")%>
+
+<div class="bg-slate-300 p-4 rounded-md shadow-lg border-2 border-violet-400">
+    <h1 class="text-3xl mb-6 font-bold">
+       <span class="text-violet-400">Edit</span>  <%=listing.title%>
+    </h1>
+    <div>
+        <!-- render a form that will take details of listing from user about listing then edit  -->
+        <form method="POST" action="/listings/<%=listing._id%>?_method=PUT">
+            <!-- input for title  -->
+            <div>    
+             <label for="title" class="block text-md font-medium text-black shadow-sm" >
+               Title 
+              </label>
+              <input required id="title" name="listing[title]" type="text" placeholder="enter title for listing" class="mt-1 block w-full p-2 rounded-md border-2 shadow-sm  focus:border-black focus:ring-black"/>
+              <br/>
+           </div>
+           <!-- input + label for descriptiton -->
+            <div>
+                <label for="description" class="block text-md font-medium text-black">
+                    Description
+                </label>
+                <textarea id="description" required="true" class="mt-1 block w-full p-3 border-2 rounded-md border-gray-600 shadow-sm focus:border-black focus:ring-black" name="listing[description]" placeholder="enter description for this listing"></textarea>
+            </div>
+            <!-- input + label for price  -->
+            <div>
+                <label for="price" class="block text-md font-medium text-black">
+                    Price
+                </label>
+                 <input name="listing[price]" class="mt-1 block w-full p-2 rounded-md border-black  border-2 shadow-sm  focus:border-black focus:ring-black" placeholder="give price of  this listing " id="price" required> 
+            </div>
+            <!-- input for image  -->
+             <div>
+                <label for="image" class="block text-md font-medium text-black ">
+                    Image
+                </label>
+                <input name="listing[image]" id="image" class="mt-1 text-black w-full p-2 border-2 rounded-md border-gray-500 shadow-sm focus:border-black focus:ring-black" placeholder="enter url or link of Image "/>
+             </div>
+             <!-- input for location and country-->
+             <div class="md:flex block">
+                <!-- for location  -->
+                <div class="w-full lg:w-1/2 md:w-[100%] mr-2 mb-3">
+                    <label for="location" class="block  tex-md font-medium text-black">
+                        Location
+                    </label>
+                    <input class=" mt-1 block w-full p-2 border-2 rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black" name="location" placeholder="enter location of this listing"/>                   
+                 </div>
+                 <!-- for counrty  -->
+                  <div class="w-full lg:w-1/2 md:w-[100%]">
+                     <label for="country" class="block text-md font-medium text-black">
+                        Country
+                     </label>
+                     <input id="counrty" name="listing[country]" class="mt-1 block w-full p-2 border-2 rounded-md border-gary shadow-sm focus:border-black focus:ring-black " placeholder="enter country for this listing"/>
+                  </div>
+             </div>
+             <!-- button for submitting the edit listing form  -->
+              <div class="flex justify-start md:ml-[45%] "  >
+                   <button type="submit" class="mt-5 rounded-md px-5 py-2 bg-violet-400 text-sm font-semibold hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ">
+                    Edit Listing
+                   </button>
+              </div>
+        </form>
+    </div>
+</div>  
+
